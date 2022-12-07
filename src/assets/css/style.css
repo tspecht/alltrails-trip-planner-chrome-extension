@@ -1,0 +1,35 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+#app {
+    margin: 16px;
+}
+
+.header {
+    min-width: 350px;
+}
+
+.trail-row-header {
+    min-width: 350px;
+}
+
+.trail-row {
+    font-size: 14px;
+}
+
+.trail-row .trail-title {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.header {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.header h3 {
+    display: inline-block;
+}
+
+#add-trails-button {
+    margin-right: 10px;
+}
