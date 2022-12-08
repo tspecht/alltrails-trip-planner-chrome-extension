@@ -26,7 +26,9 @@ function TrailRow({
             <td>{(length * milesPerMeter).toFixed(1)} mi</td>
             <td>{minutesToString(hikingDuration)}</td>
             <td>
-                <a className='btn-secondary btn-sm' href={`https://www.google.com/maps/dir/Current+Location/${location.lat},${location.long}`} target="_blank">Directions</a>
+                {location && 
+                    <a className='btn-secondary btn-sm' href={`https://www.google.com/maps/dir/Current+Location/${location.lat},${location.long}`} target="_blank">Directions</a>
+                }
             </td>
         </tr>
     )

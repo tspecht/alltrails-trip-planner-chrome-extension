@@ -19,7 +19,8 @@
       "js": ["scripts/content.js"],
       "matches": [
         "https://www.alltrails.com/trail/*",
-        "https://www.alltrails.com/explore/trail/*"
+        "https://www.alltrails.com/explore/trail/*",
+        "https://www.alltrails.com/explore*"
       ],
       "run_at": "document_end"
     }

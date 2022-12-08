@@ -18,12 +18,14 @@ class App extends React.Component {
         };
         this.state = Object.assign({}, this.initialState);
 
+        this.sendEvent = this.sendEvent.bind(this);
         this.checkIfOnAllTrails = this.checkIfOnAllTrails.bind(this);
         this.addTrailOnTab = this.addTrailOnTab.bind(this);
         this.loadTrails = this.loadTrails.bind(this);
         this.removeTrail = this.removeTrail.bind(this);
         this.clearStorage = this.clearStorage.bind(this);
 
+        // Update some initial state
         this.checkIfOnAllTrails();
         this.loadTrails();
     }
@@ -101,10 +103,11 @@ class App extends React.Component {
 
     clearStorage() {
         chrome.storage.local.clear(() => {
-            chrome.runtime.sendMessage({ event: "clear_trails" });
+            this.sendEvent("clear_trails");
+
+            this.setState(this.initialState);
+            this.checkIfOnAllTrails();
         });
-        this.setState(this.initialState);
-        this.checkIfOnAllTrails();
     }
 
     removeTrail(id) {
@@ -113,14 +116,11 @@ class App extends React.Component {
         this.setState(newState);
         this.persistTrails();
 
-        chrome.runtime.sendMessage({ event: "remove_trail" });
+        this.sendEvent("remove_trail");
     }
 
     addTrailOnTab() {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, { event: "add_trail" });
-            chrome.runtime.sendMessage({ event: "add_trail" });
-        });
+        this.sendEvent("add_trail");
     }
 
     checkIfOnAllTrails() {
@@ -136,6 +136,13 @@ class App extends React.Component {
                     this.setState(newState);
                 }
             }
+        });
+    }
+
+    sendEvent(event) {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, { event });
+            chrome.runtime.sendMessage({ event });
         });
     }
 }
